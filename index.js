@@ -10,16 +10,14 @@ const client = new Client({
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  commands.sendMessage();
+  commands.startBOT(client);
 });
 
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) return;
-
-  if (interaction.commandName === 'ping') {
-    await interaction.reply('Pong!');
+// 'interactionCreate' event not compatible with v12 of Discord.js / Discord.js not compatible < node v16 (dev)
+client.on('message', msg => {
+  if (msg.content === 'ping') {
+    msg.reply('Pong!');
   }
 });
-
 
 client.login(t.token);
