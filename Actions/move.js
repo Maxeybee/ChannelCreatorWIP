@@ -35,6 +35,7 @@ module.exports = {
 
             } else {
                 console.log("Channel Already existing ! => " + verifChannel);
+                message.channel.send("Channel Already existing !");
             }
             //console.log(JSON.stringify(message.guild));
 
