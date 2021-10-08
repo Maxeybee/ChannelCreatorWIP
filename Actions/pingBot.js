@@ -1,0 +1,9 @@
+module.exports = {
+    name:'ping',
+    description: 'Ping!',
+    execute(message){
+        message.channel.send('Pong.');
+        console.log(message.guild.id);
+    }
+
+}
