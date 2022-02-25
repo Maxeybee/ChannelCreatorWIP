@@ -13,16 +13,15 @@ function getUserFromMention(mention) {
 
 module.exports = {
     name: 'move',
-    description: 'Information about the arguments provided.',
+    description: 'Move the specified users to a voice Channel',
     execute(message, args) {
-        //let concatenateElements = ' '
         if (!args.length) {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         } else {
-            /**Check if channel exist */
+
+            // Check if Category Channel exist =>
             let verifChannel = message.channel.guild.channels.cache.find((channel) =>
                 channel.name.toLowerCase() === `salons temporaires`);
-            //console.log("value verif channel : " + verifChannel)
             if (!verifChannel) {
                 // is channel == null 
                 message.guild.channels.create('SALONS TEMPORAIRES', { //Create a channel
@@ -33,21 +32,32 @@ module.exports = {
                     }]
                 });
 
+                // If exist then create Voice Channel =>
             } else {
                 console.log("Channel Already existing ! => " + verifChannel);
-                message.channel.send("Channel Already existing !");
+                // count the existing voice channel under .
+                //Create New Random Channel
+                message.guild.channels.create('Salon 01', { //Create a channel
+                    type: 'voice',
+                    parent: verifChannel,
+                    permissionOverwrites: [{
+                        id: message.guild.id,
+                        allow: [
+                            'VIEW_CHANNEL',
+                            'SPEAK',
+                            'CONNECT'
+                        ],
+                    }]
+                });
             }
-            //console.log(JSON.stringify(message.guild));
-
-
             /**Arguments handling (user args)  */
             args.forEach(element => {
                 // get user id formated
-                //console.log(getUserFromMention(element));
-                return message.channel.send(element);
+                let userId = getUserFromMention(element)
+                return message.channel.send("user from mention => " + userId);
+
 
             });
-            //return message.channel.send('args : ' + concatenateElements);
         }
     },
 };

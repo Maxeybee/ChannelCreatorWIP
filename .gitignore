@@ -75,5 +75,5 @@ typings/
 # FuseBox cache
 .fusebox/
 
-# ignoe config json file
+# ignore config json file
 config.json

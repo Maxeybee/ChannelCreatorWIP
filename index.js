@@ -1,14 +1,16 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const {
-  token,
-  prefix
-} = require("./config.json");
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./Actions').filter(file => file.endsWith('.js'));
-// 'interactionCreate' event not compatible with v12 of Discord.js / Discord.js not compatible < node v16 (dev)
+const config = require("./config.json");
 
+const client = new Discord.Client();
+
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./Actions').filter(file => file.endsWith('.js'));
+
+// 'interactionCreate' event not compatible with v12 of Discord.js
+
+// loop that require Action files & enable the command for each action file
 for (const file of commandFiles) {
   const command = require(`./Actions/${file}`);
   client.commands.set(command.name, command);
@@ -18,9 +20,9 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
-  const args = message.content.slice(prefix.length).trim().split(/ +/);
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
 
@@ -34,4 +36,4 @@ client.on('message', message => {
   }
 });
 
-client.login(token);
+client.login(config.token);
