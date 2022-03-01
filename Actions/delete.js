@@ -1,5 +1,3 @@
-const utils = require('../utils');
-
 module.exports = {
     name: 'move',
     description: 'Move the specified users to a voice Channel',
@@ -13,8 +11,8 @@ module.exports = {
                 channel.name.toLowerCase() === `salons temporaires`);
             if (!verifChannel) {
                 // is channel == null 
-                message.guild.channels.create('SALONS TEMPORAIRES', { // Create a channel
-                    type: 'category',
+                message.guild.channels.create('SALONS TEMPORAIRES', { //Create a channel
+                    type: 'category', //Make sure the channel is a text channel
                     permissionOverwrites: [{ //Set permission overwrites
                         id: message.guild.id,
                         allow: ['VIEW_CHANNEL'],
@@ -24,12 +22,7 @@ module.exports = {
                 // If exist then create Voice Channel =>
             } else {
                 console.log("Channel Already existing ! => " + verifChannel);
-
                 // count the existing voice channel under .
-                const voiceChannel = [];
-                message.guild.channels.forEach(channel => {
-                    if(channel.parent == )
-                });
                 //Create New Random Channel
                 message.guild.channels.create('Salon 01', { //Create a channel
                     type: 'voice',
@@ -47,7 +40,7 @@ module.exports = {
             /**Arguments handling (user args)  */
             args.forEach(element => {
                 // get user id formated
-                let userId = utils.getUserFromMention(element)
+                let userId = getUserFromMention(element)
                 return message.channel.send("user from mention => " + userId);
 
 
