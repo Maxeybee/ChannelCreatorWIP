@@ -18,7 +18,7 @@ module.exports = {
         if (!args.length) {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         } else {
-
+            debugger;
             // Check if Category Channel exist =>
             let verifChannel = message.channel.guild.channels.cache.find((channel) =>
                 channel.name.toLowerCase() === `salons temporaires`);
