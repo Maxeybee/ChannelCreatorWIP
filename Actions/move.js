@@ -27,9 +27,9 @@ module.exports = {
 
                 // count the existing voice channel under .
                 const voiceChannel = [];
-                message.guild.channels.forEach(channel => {
-                    if(channel.parent == )
-                });
+                // message.guild.channels.forEach(channel => {
+                //     if(channel.parent == )
+                // });
                 //Create New Random Channel
                 message.guild.channels.create('Salon 01', { //Create a channel
                     type: 'voice',
