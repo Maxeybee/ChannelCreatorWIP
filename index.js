@@ -6,7 +6,7 @@ const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./Actions').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./actions').filter(file => file.endsWith('.js'));
 
 // 'interactionCreate' event not compatible with v12 of Discord.js
 
