@@ -47,7 +47,7 @@ module.exports = {
           console.log("1st temporary room error => " + roomError);
         }
 
-        // If exist then create Voice Channel =>
+        // IF EXIST THEN CREATE VOICE CHANNEL ==>
       } else {
         console.log("Channel Already existing ! => " + verifChannel);
 
