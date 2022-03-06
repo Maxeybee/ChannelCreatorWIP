@@ -48,7 +48,7 @@ module.exports = {
             args.forEach(element => {
                 // get user id formated
                 let userId = utils.getUserFromMention(element)
-                return message.channel.send("user from mention => " + userId);
+                return message.channel.send("user from mention => " + userId + "\n");
 
 
             });

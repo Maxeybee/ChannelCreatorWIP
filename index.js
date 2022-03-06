@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require("./config.json");
+const { stringify } = require('querystring');
 
 const client = new Discord.Client();
 
@@ -10,9 +11,9 @@ const commandFiles = fs.readdirSync('./actions').filter(file => file.endsWith('.
 
 // 'interactionCreate' event not compatible with v12 of Discord.js
 
-// loop that require Action files & enable the command for each action file
+// retrieve commands from actions folder
 for (const file of commandFiles) {
-  const command = require(`./Actions/${file}`);
+  const command = require(`./actions/${file}`);
   client.commands.set(command.name, command);
 }
 client.on('ready', () => {
@@ -25,11 +26,11 @@ client.on('message', message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
-
   if (!client.commands.has(command)) return;
 
   try {
     client.commands.get(command).execute(message, args, client);
+    console.log(JSON.stringify(client));
   } catch (error) {
     console.error(error);
     message.reply('there was an error trying to execute that command!');

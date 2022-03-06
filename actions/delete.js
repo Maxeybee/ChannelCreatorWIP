@@ -1,14 +1,18 @@
-const { MessageFlags } = require("discord.js");
-const {
-    stringify
-} = require("querystring");
-
 module.exports = {
-    name: 'delete_ messages',
+    name: 'delete',
     description: 'delete all messages',
     execute(message, args, client) {
-
-        return message.channel.send("delete messages !");
+        let channel = message.channel.fetch();
+        // let fetched;
+        // do {
+        //     fetched = message.channel.fetch({
+        //         limit: 100
+        //     });
+        //     message.channel.bulkDelete(fetched);
+        // }
+        // while (fetched.size >= 2);
+        
+        return message.channel.send("delete messages ! => " +channel);
 
     }
 };
