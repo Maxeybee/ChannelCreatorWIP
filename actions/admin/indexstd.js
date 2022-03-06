@@ -2,7 +2,15 @@ const Discord = require('discord.js');
 const config = require('./configuration.json');
 const fs = require('fs');
 
-const client = new Discord.Client();
+const client = new Discord.Client({
+    messageCacheLifetime: 60,
+    fetchAllMembers: false,
+    messageCacheMaxSize: 10,
+    restTimeOffset: 0,
+    restWsBridgetimeout: 100,
+    disableEveryone: true,
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION']
+  });
 client.commands = new Discord.Collection();
 
 // retrieve commands from actions folder
