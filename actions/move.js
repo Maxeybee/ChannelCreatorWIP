@@ -9,24 +9,43 @@ module.exports = {
         `You didn't provide any arguments, ${message.author}!`
       );
     } else {
-      debugger;
       // Check if Category Channel exist =>
       let verifChannel = message.channel.guild.channels.cache.find(
         (channel) => channel.name.toLowerCase() === `salons temporaires`
       );
       if (!verifChannel) {
         // is channel == null
-        message.guild.channels.create("SALONS TEMPORAIRES", {
-          // Create a channel
-          type: "category",
-          permissionOverwrites: [
-            {
-              //Set permission overwrites
-              id: message.guild.id,
-              allow: ["VIEW_CHANNEL"],
-            },
-          ],
-        });
+        try {
+          message.guild.channels.create("SALONS TEMPORAIRES", {
+            // Create a category channel + 1st temporary room
+            type: "category",
+            permissionOverwrites: [
+              {
+                //Set permission overwrites
+                id: message.guild.id,
+                allow: ["VIEW_CHANNEL"],
+              },
+            ],
+          });
+        } catch (catError) {
+          console.log("Category channel error => " + catError);
+        }
+
+        try {
+          message.guild.channels.create("Salon 01", {
+            //Create a channel
+            type: "voice",
+            parent: verifChannel,
+            permissionOverwrites: [
+              {
+                id: message.guild.id,
+                allow: ["VIEW_CHANNEL", "SPEAK", "CONNECT"],
+              },
+            ],
+          });
+        } catch (roomError) {
+          console.log("1st temporary room error => " + roomError);
+        }
 
         // If exist then create Voice Channel =>
       } else {
@@ -38,7 +57,7 @@ module.exports = {
         //     if(channel.parent == )
         // });
         //Create New Random Channel
-        message.guild.channels.create("Salon 01", {
+        message.guild.channels.create("Salon 0X", {
           //Create a channel
           type: "voice",
           parent: verifChannel,
