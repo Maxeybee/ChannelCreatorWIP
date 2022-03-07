@@ -1,11 +1,13 @@
 const fs = require("fs");
 const Discord = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const config = require("./config.json");
-const { stringify } = require("querystring");
 
-const client = new Discord.Client();
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
-client.commands = new Discord.Collection();
+const commands = new Map(client.commands);
 
 const commandFiles = fs
   .readdirSync("./actions")
@@ -16,22 +18,24 @@ const commandFiles = fs
 // retrieve commands from actions folder
 for (const file of commandFiles) {
   const command = require(`./actions/${file}`);
-  client.commands.set(command.name, command);
+  commands.set(command.name, command);
 }
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  // console.log(commands);
+  console.log(JSON.stringify(client));
 });
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
-
+  
   const args = message.content.slice(config.prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
-  if (!client.commands.has(command)) return;
+  if (!commands.has(command)) return;
 
   try {
-    client.commands.get(command).execute(message, args, client);
+    commands.get(command).execute(message, args, client);
     //console.log(JSON.stringify(client));
   } catch (error) {
     console.error(error);
