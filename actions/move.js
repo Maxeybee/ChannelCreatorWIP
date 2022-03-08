@@ -3,6 +3,9 @@ const utils = require("../utils");
 module.exports = {
   name: "move",
   description: "Move the specified users to a voice Channel",
+  options: [
+    name
+  ]
   execute(message, args) {
     if (!args.length) {
       return message.channel.send(
