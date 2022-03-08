@@ -28,14 +28,17 @@ const getApp = (guildId) => {
 };
 
 client.on("ready", async () => {
+  debugger;
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(commands.keys());
   commands.forEach((cmd) => {
+    //console.log(cmd.options);
     try {
       getApp(config.guildId).commands.post({
         data: {
           name: cmd.name,
           description: cmd.description,
+          options: cmd.options
         },
       });
     } catch (errorReady) {
@@ -61,17 +64,16 @@ client.on("ready", async () => {
 //   }
 // });
 
-client.ws.on("INTERACTION_CREATE", async (interaction) => {
-  const {name, options } = interaction.data;
+client.on("interactionCreate", async interaction => {
+  if (!interaction.isCommand()) return;
 
-  const cmd = name.toLowerCase();
+  const { commandName } = interaction;
 
-  if (commands.get(cmd)) {
-    console.log(cmd);
-    console.log(options);
-  } else{
-    return;
-  }
+  if (commands.get(commandName)) {
+    console.log(commandName);
+    await interaction.reply('Pong!');
+    console.log(interaction.options);
+  }    
   //console.log(JSON.stringify(interaction));
 
   //const args = interaction.content.slice(config.prefix.length).trim().split(/ +/);

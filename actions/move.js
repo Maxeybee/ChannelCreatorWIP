@@ -4,8 +4,19 @@ module.exports = {
   name: "move",
   description: "Move the specified users to a voice Channel",
   options: [
-    name
-  ]
+    {
+      name: "name1",
+      description: "1st name to be moved",
+      require: true,
+      type:3
+    },
+    {
+      name: "name2",
+      description: "2nd name to be moved",
+      require: false,
+      type:3
+    }
+  ],
   execute(message, args) {
     if (!args.length) {
       return message.channel.send(
