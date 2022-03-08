@@ -13,7 +13,7 @@ module.exports = {
     {
       name: "name2",
       description: "2nd name to be moved",
-      require: false,
+      require: true,
       type: 3,
     },
   ],
