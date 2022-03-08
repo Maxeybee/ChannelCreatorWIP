@@ -8,14 +8,14 @@ module.exports = {
       name: "name1",
       description: "1st name to be moved",
       require: true,
-      type:3
+      type: 3,
     },
     {
       name: "name2",
       description: "2nd name to be moved",
       require: false,
-      type:3
-    }
+      type: 3,
+    },
   ],
   execute(message, args) {
     if (!args.length) {
