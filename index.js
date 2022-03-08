@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const Discord = require("discord.js");
 const { Client, Intents } = require("discord.js");
 const config = require("./config.json");
@@ -12,23 +13,47 @@ const commands = new Map(client.commands);
 const commandFiles = fs
   .readdirSync("./actions")
   .filter((file) => file.endsWith(".js"));
-
-// 'interactionCreate' event not compatible with v12 of Discord.js
-
 // retrieve commands from actions folder
 for (const file of commandFiles) {
   const command = require(`./actions/${file}`);
   commands.set(command.name, command);
 }
-client.on("ready", () => {
+const getApp = (guildId) => {
+  const app = client.api.applications(client.user.id);
+  if (guildId) {
+    app.guilds(guildId);
+  }
+  return app;
+};
+
+client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  // console.log(commands);
-  console.log(JSON.stringify(client));
+  console.log(commands.size);
+  let listCommands = commands.keys();
+  console.log(listCommands);
+  // await getApp(config.guildId).commands.post({
+  //   data: {
+  //     name: command.name,
+  //     description: command.description,
+  //   },
+  // });
+  commands.forEach((cmd) => {
+    try {
+      getApp(config.guildId).commands.post({
+        data: {
+          name: cmd.name,
+          description: cmd.description,
+        },
+      });
+    } catch (errorReady) {
+      console.log("ready error => " + errorReady);
+    }
+  });
 });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
-  
+
   const args = message.content.slice(config.prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
