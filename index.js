@@ -27,16 +27,7 @@ const getApp = (guildId) => {
 };
 
 client.on("ready", async () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-  console.log(commands.size);
-  let listCommands = commands.keys();
-  console.log(listCommands);
-  // await getApp(config.guildId).commands.post({
-  //   data: {
-  //     name: command.name,
-  //     description: command.description,
-  //   },
-  // });
+  console.log(`Logged in as ${client.user.tag}!`);  
   commands.forEach((cmd) => {
     try {
       getApp(config.guildId).commands.post({
