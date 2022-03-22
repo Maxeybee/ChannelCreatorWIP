@@ -4,6 +4,7 @@ pipeline {
     stage('error') {
       steps {
         npm 'install'
+        sh 'node index.js'
       }
     }
 
